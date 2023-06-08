@@ -13,5 +13,7 @@ To create a custom dataset dataset custom_dataset/filter.py is used with COCO la
 For training the yolov5 model a data config file must be created (dataset.yaml). Dataset config file is a file that defines 1) the dataset root directory path and relative paths to train / val / test image directories (or .txt files with image paths) and 2) a class names dictionary. After that the model yolov5n model was trained in 200 epochs.
 
 ## 3. Validation for custom trained and original models
+![App Screenshot](https://github.com/AlexeyDzyubaP/yolov5_reduced_classes/screenshots/000000035682_original.jpg)
+![App Screenshot](https://github.com/AlexeyDzyubaP/yolov5_reduced_classes/screenshots/000000035682_custom.jpg)
 
 ## 4. Conclusion 
