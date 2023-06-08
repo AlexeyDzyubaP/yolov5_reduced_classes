@@ -6,7 +6,7 @@
 *.tif
 *.tiff
 *.heic
-*.JPG
+#*.JPG
 *.JPEG
 *.PNG
 *.BMP
