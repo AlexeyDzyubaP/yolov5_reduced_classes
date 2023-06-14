@@ -6,20 +6,10 @@ The aim of this project is to train yolov5 model on a custom dataset with reduce
 
 The dataset used in this work is a filtered COCO dataset with 3 classes: Person, Pet (Cat+Dog), Vehicle (car+bus+truck).
 
-## 1. Creating a custom dataset
-To create a custom dataset dataset custom_dataset/filter.py is used with COCO labels file (json). Example: **python filter.py --input_json c:\users\you\annotations\instances_train2017.json --output_json c:\users\you\annotations\filtered.json --categories person dog cat**. Then, using custom_dataset/coco2yolo.ipynb, the filtered COCO format labels are converted into yolo format labels (json -> txt).
+# Results comparison with the base model
+Let's look at the detection examples and compare them to the results of the base model, image by image. As we compare the models using test images we can obeserve minor differences in most cases (slight change in confidence score and bounding box size and position). However, in some cases the custom model appears to have an advantage. 
 
-## 2. Training yolov5 model using custom dataset
-For training the yolov5 model a data config file must be created (dataset.yaml). Dataset config file is a file that defines 1) the dataset root directory path and relative paths to train / val / test image directories (or .txt files with image paths) and 2) a class names dictionary. After that the model yolov5n model was trained in 200 epochs.
-
-## 3. Validation for custom trained and original models
-
-
-## 4. Detection comparison with the base model
-
-In addition to the validation results, it would be beneficial to look at the detection examples and compare them to the results of the base model, image by image. As we compare the models using test images we can obeserve minor differences in most cases (slight change in confidence score and bounding box size and position). However, in some cases the custom model appears to have an advantage. 
-
-When comparing detection results LEFT is base model RIGHT is custom model.
+When comparing detection results LEFT is *base model* RIGHT is *custom model*.
 ### Contrast 
 
 The custom model seems to show better results compared to the base YOLOv5 in cases where the object doesn't stand out against the background. A good example for such case is a vehicle driver/passenger covered by the reflection of a window. With another complication in the form of dim lighting inside the vehicle, we get a hardly recognizable upper body silhouette. 
@@ -46,4 +36,14 @@ In COCO dataset there are a many pictures of crowded places such as sporting eve
 
 In some cases we can see that this improvement alows the model to detect multiple people when detecting them one by one is nearly impossible (like a stand full of people watching a sport event shot from a long distance). This could prove to be quite usefull if only we could reliably separate the "crowd" detection instaces from a regular person detection instances. The solution might be to separate these 2 classes by the size of the bounding box. In most applications of a YOLO type model the objects are rarely shot from a close distance, therefore, the bounding box for a person-type object usually takes up no more than 10-20% of an image. Therefore, if we detect a person-type object with a bounding box for than a set percentage of an image we can relabel it as a crowd-type object. This method could futher be improved by comparing the largest bounding box with the others in the same image or by counting the number of others person-type objects inside the bounding box.
 
-## 5. Conclusion 
+# Model creation
+## 1. Creating a custom dataset
+To create a custom dataset dataset custom_dataset/filter.py is used with COCO labels file (json). Example: **python filter.py --input_json c:\users\you\annotations\instances_train2017.json --output_json c:\users\you\annotations\filtered.json --categories person dog cat**. Then, using custom_dataset/coco2yolo.ipynb, the filtered COCO format labels are converted into yolo format labels (json -> txt).
+
+## 2. Training yolov5 model using custom dataset
+For training the yolov5 model a data config file must be created (dataset.yaml). Dataset config file is a file that defines 1) the dataset root directory path and relative paths to train / val / test image directories (or .txt files with image paths) and 2) a class names dictionary. After that the model yolov5n model was trained in 200 epochs.
+
+## 3. Validation for custom trained and original models
+
+
+## Conclusion 
