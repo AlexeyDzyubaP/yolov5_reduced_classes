@@ -36,35 +36,48 @@ In COCO dataset there are a many pictures of crowded places such as sporting eve
 
 In some cases we can see that this improvement alows the model to detect multiple people when detecting them one by one is nearly impossible (like a stand full of people watching a sport event shot from a long distance). This could prove to be quite usefull if only we could reliably separate the "crowd" detection instaces from a regular person detection instances. The solution might be to separate these 2 classes by the size of the bounding box. In most applications of a YOLO type model the objects are rarely shot from a close distance, therefore, the bounding box for a person-type object usually takes up no more than 10-20% of an image. Therefore, if we detect a person-type object with a bounding box for than a set percentage of an image we can relabel it as a crowd-type object. This method could futher be improved by comparing the largest bounding box with the others in the same image or by counting the number of others person-type objects inside the bounding box.
 
-### Validation results
+### Validation time
+For validation custom model showed a significant improvement in prediction time of *~22%*. Prediction time was calculated as *preprocess time + inference + NMS*.
+
+|  Model  |  Preprocess  |   Inference | NMS   |
+| --- | --- | --- | --- |
+| Custom model  |    1.1ms  |    65.5ms   |     1.2ms   |
+|    YOLOv5  |    1.1ms  |     76.0ms   |     10.0ms   |
+
+Speed: 1.1ms pre-process, 65.5ms inference, 1.2ms NMS per image at shape (32, 3, 640, 640)
+Speed: 1.1ms pre-process, 76.0ms inference, 10.0ms NMS per image at shape (32, 3, 640, 640)
+87.1 0.871
+### Validation metrics
 Here are validation results comparison with the base YOLO model. For base model I take avarage result for classes in super category considering the number of instances.
 
-*Custom model results:*
+**Custom model results:**
 |  Class  |   Images | Instances   |       P   |       R   |   mAP50 |  mAP50-95|
 | --- | --- | --- | --- | --- | --- | --- |
 | person  |    40504  |    88153   |   0.736   |   0.653   |   0.718   |    0.45 |
 |    pet  |    40504  |     3621   |    0.81   |   0.654   |   0.739   |   0.488 |
 |vehicle  |    40504  |    20379   |   0.743   |    0.54   |   0.624   |   0.373 |
 
-*Base YOLO model results:*
+**YOLOv5 model results:**
 |  Class  |   Images | Instances   |       P   |       R   |   mAP50 |  mAP50-95|
 | --- | --- | --- | --- | --- | --- | --- |
-| person   |   40137   |   88153   |   0.712   |   0.641   |   0.694   |   0.415 |
+| person   |   40504   |   88153   |   0.712   |   0.641   |   0.694   |   0.415 |
 |    pet  |    40504  |     3621   |    0.72   |   0.62   |   0.68   |   0.444 |
 |vehicle  |    40504  |    20379   |   0.617   |    0.504  |   0.538   |   0.318 |
 
 <details>
   <summary> Full Base YOLO model </summary>
-    *Base YOLO model results:*
-    |  Class     Images  Instances     |     P     |     R     | mAP50  | mAP50-95 |
+    **YOLOv5 model results:**
+    |  Class   |  Images | Instances     |     P     |     R     | mAP50  | mAP50-95 |
     | --- | --- | --- | --- | --- | --- | --- |
-    | person   |   40137   |   88153   |   0.712   |   0.641   |   0.694   |   0.415 |
-    |    cat   |   40137   |    1669   |    0.74   |   0.682   |   0.735   |   0.464 | 
-    |    dog   |   40137   |    1952   |   0.703   |   0.566   |   0.633   |   0.426 |
-    |    car   |   40137   |   15014   |   0.607   |   0.511   |   0.539   |   0.301 |
-    |    bus   |   40137   |    2027   |   0.767   |   0.654   |   0.722   |   0.534 |
-    |  truck   |   40137   |    3338   |   0.573   |   0.384   |   0.424   |   0.263 |
+    | person   |   40504   |   88153   |   0.712   |   0.641   |   0.694   |   0.415 |
+    |    cat   |   40504   |    1669   |    0.74   |   0.682   |   0.735   |   0.464 | 
+    |    dog   |   40504   |    1952   |   0.703   |   0.566   |   0.633   |   0.426 |
+    |    car   |   40504   |   15014   |   0.607   |   0.511   |   0.539   |   0.301 |
+    |    bus   |   40504   |    2027   |   0.767   |   0.654   |   0.722   |   0.534 |
+    |  truck   |   40504   |    3338   |   0.573   |   0.384   |   0.424   |   0.263 |
 </details>
+
+Here we can see an improvemnt in every metric for every class. We can also see that the custom model improvement is more noticeable for non-person classes. The reason for that may be the disproportionate nature of the dataset where the "person" class is overrepresented.
 
 # Model creation
 ## 1. Creating a custom dataset
