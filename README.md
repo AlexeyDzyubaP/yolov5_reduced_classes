@@ -38,19 +38,19 @@ In some cases we can see that this improvement alows the model to detect multipl
 
 ### Validation results.
   Class     Images  Instances          P          R      mAP50   mAP50-95
-*    all      40504     112153      0.763      0.615      0.694      0.437
+    all      40504     112153      0.763      0.615      0.694      0.437
  person      40504      88153      0.736      0.653      0.718       0.45
     pet      40504       3621       0.81      0.654      0.739      0.488
 vehicle      40504      20379      0.743       0.54      0.624      0.373*
 
 
   Class     Images  Instances          P          R      mAP50   mAP50-95
- *person      40137      88153      0.712      0.641      0.694      0.415
+ person      40137      88153      0.712      0.641      0.694      0.415
     cat      40137       1669       0.74      0.682      0.735      0.464
     dog      40137       1952      0.703      0.566      0.633      0.426
     car      40137      15014      0.607      0.511      0.539      0.301
     bus      40137       2027      0.767      0.654      0.722      0.534
-  truck      40137       3338      0.573      0.384      0.424      0.263*
+  truck      40137       3338      0.573      0.384      0.424      0.263
 # Model creation
 ## 1. Creating a custom dataset
 To create a custom dataset dataset custom_dataset/filter.py is used with COCO labels file (json). Example: **python filter.py --input_json c:\users\you\annotations\instances_train2017.json --output_json c:\users\you\annotations\filtered.json --categories person dog cat**. Then, using custom_dataset/coco2yolo.ipynb, the filtered COCO format labels are converted into yolo format labels (json -> txt).
