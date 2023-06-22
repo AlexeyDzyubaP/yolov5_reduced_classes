@@ -76,7 +76,7 @@ Here are validation results comparison with the base YOLO model. For base model 
     |    car   |   40504   |   15014   |   0.607   |   0.511   |   0.539   |   0.301 |
     |    bus   |   40504   |    2027   |   0.767   |   0.654   |   0.722   |   0.534 |
     |  truck   |   40504   |    3338   |   0.573   |   0.384   |   0.424   |   0.263 |
-    </p>
+</p>
 </details>
 
 Here we can see an improvemnt in every metric for every class. We can also see that the custom model improvement is more noticeable for non-person classes. The reason for that may be the disproportionate nature of the dataset where the "person" class is overrepresented.
