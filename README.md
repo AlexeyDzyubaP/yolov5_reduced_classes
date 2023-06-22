@@ -1,10 +1,10 @@
-# yolov5_reduced_classes
-An attempt to increase accuracy of the yolov5 model for a specific task by reducing the number of classes.
+## About
+Reducing the number of Yolov5 classes in custom model to increase detection accuracy.
 
 ## Introduction
 The aim of this project is to train yolov5 model on a custom dataset with reduced number of classes to achive an increase in accuracy.
 
-The dataset used in this work is a filtered COCO dataset with 3 classes: Person, Pet (Cat+Dog), Vehicle (car+bus+truck).
+The dataset used in this work is a filtered COCO dataset with **3 classes: Person, Pet (Cat+Dog), Vehicle (car+bus+truck)**.
 
 # Results comparison with the base model
 Let's look at the detection examples and compare them to the results of the base model, image by image. As we compare the models using test images we can obeserve minor differences in most cases (slight change in confidence score and bounding box size and position). However, in some cases the custom model appears to have an advantage. 
@@ -36,6 +36,21 @@ In COCO dataset there are a many pictures of crowded places such as sporting eve
 
 In some cases we can see that this improvement alows the model to detect multiple people when detecting them one by one is nearly impossible (like a stand full of people watching a sport event shot from a long distance). This could prove to be quite usefull if only we could reliably separate the "crowd" detection instaces from a regular person detection instances. The solution might be to separate these 2 classes by the size of the bounding box. In most applications of a YOLO type model the objects are rarely shot from a close distance, therefore, the bounding box for a person-type object usually takes up no more than 10-20% of an image. Therefore, if we detect a person-type object with a bounding box for than a set percentage of an image we can relabel it as a crowd-type object. This method could futher be improved by comparing the largest bounding box with the others in the same image or by counting the number of others person-type objects inside the bounding box.
 
+### Validation results.
+  Class     Images  Instances          P          R      mAP50   mAP50-95
+*    all      40504     112153      0.763      0.615      0.694      0.437
+ person      40504      88153      0.736      0.653      0.718       0.45
+    pet      40504       3621       0.81      0.654      0.739      0.488
+vehicle      40504      20379      0.743       0.54      0.624      0.373*
+
+
+  Class     Images  Instances          P          R      mAP50   mAP50-95
+ *person      40137      88153      0.712      0.641      0.694      0.415
+    cat      40137       1669       0.74      0.682      0.735      0.464
+    dog      40137       1952      0.703      0.566      0.633      0.426
+    car      40137      15014      0.607      0.511      0.539      0.301
+    bus      40137       2027      0.767      0.654      0.722      0.534
+  truck      40137       3338      0.573      0.384      0.424      0.263*
 # Model creation
 ## 1. Creating a custom dataset
 To create a custom dataset dataset custom_dataset/filter.py is used with COCO labels file (json). Example: **python filter.py --input_json c:\users\you\annotations\instances_train2017.json --output_json c:\users\you\annotations\filtered.json --categories person dog cat**. Then, using custom_dataset/coco2yolo.ipynb, the filtered COCO format labels are converted into yolo format labels (json -> txt).
