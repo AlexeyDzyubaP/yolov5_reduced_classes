@@ -37,11 +37,12 @@ In COCO dataset there are a many pictures of crowded places such as sporting eve
 In some cases we can see that this improvement alows the model to detect multiple people when detecting them one by one is nearly impossible (like a stand full of people watching a sport event shot from a long distance). This could prove to be quite usefull if only we could reliably separate the "crowd" detection instaces from a regular person detection instances. The solution might be to separate these 2 classes by the size of the bounding box. In most applications of a YOLO type model the objects are rarely shot from a close distance, therefore, the bounding box for a person-type object usually takes up no more than 10-20% of an image. Therefore, if we detect a person-type object with a bounding box for than a set percentage of an image we can relabel it as a crowd-type object. This method could futher be improved by comparing the largest bounding box with the others in the same image or by counting the number of others person-type objects inside the bounding box.
 
 ### Validation results.
-  Class     Images  Instances          P          R      mAP50   mAP50-95
-    all      40504     112153      0.763      0.615      0.694      0.437
- person      40504      88153      0.736      0.653      0.718       0.45
-    pet      40504       3621       0.81      0.654      0.739      0.488
-vehicle      40504      20379      0.743       0.54      0.624      0.373*
+|  Class     Images  Instances          P          R      mAP50   mAP50-95|
+| --- | --- | --- | --- | --- | --- | --- |
+|    all  |    40504  |   112153   |   0.763   |   0.615   |   0.694   |   0.437
+| person  |    40504  |    88153   |   0.736   |   0.653   |   0.718   |    0.45
+|    pet  |    40504  |     3621   |    0.81   |   0.654   |   0.739   |   0.488
+|vehicle  |    40504  |    20379   |   0.743   |    0.54   |   0.624   |   0.373*
 
 
   Class     Images  Instances          P          R      mAP50   mAP50-95
